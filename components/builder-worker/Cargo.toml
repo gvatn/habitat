@@ -26,6 +26,12 @@ features = [ "suggestions", "color", "unstable" ]
 git = "https://github.com/reset/rust-zmq.git"
 branch = "habitat"
 
+[dependencies.hab]
+path = "../hab"
+
+[dependencies.habitat_common]
+path = "../common"
+
 [dependencies.habitat_core]
 path = "../core"
 

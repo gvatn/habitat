@@ -58,9 +58,13 @@ pub fn exec_command(command: PathBuf, args: Vec<OsString>) -> Result<()> {
                         prog_cstring.clone().as_bytes_with_nul().as_ptr() as *const i8);
     arg_charptrs.push(ptr::null());
 
-    unsafe {
+    let code = unsafe {
         libc::execv(prog_cstring.as_bytes_with_nul().as_ptr() as *const i8,
-                    arg_charptrs.as_mut_ptr());
+                    arg_charptrs.as_mut_ptr())
+    };
+    println!("RETURN CODE DUDE: {}", code);
+    if code != 0 {
+        return Err(Error::ExecCommandNotFound(format!("command failed: {}", code)));
     }
     Ok(())
 }

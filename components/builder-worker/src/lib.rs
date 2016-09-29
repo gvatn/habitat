@@ -13,6 +13,8 @@
 // limitations under the License.
 
 extern crate habitat_builder_protocol as protocol;
+extern crate hab;
+extern crate habitat_common as common;
 extern crate habitat_core as hab_core;
 extern crate habitat_net as hab_net;
 extern crate git2;
