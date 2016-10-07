@@ -30,6 +30,7 @@ import {TabsComponent} from "../TabsComponent";
 import {requireSignIn} from "../util";
 import {PackagesListComponent} from "../packages-list/PackagesListComponent";
 import {Subscription} from "rxjs/Subscription";
+import {FeatureFlags} from "../Privilege";
 
 export enum ProjectStatus {
     Connect,
@@ -75,7 +76,8 @@ export enum ProjectStatus {
                   <div *ngIf="!noPackages">
                     <div class="pkg-container">
                         <div class="pkg-col-1">Package Name</div>
-                        <div class="pkg-col-2">Build Settings</div>
+                        <div class="pkg-col-2" *ngIf="!builder">&nbsp;</div>
+                        <div class="pkg-col-2" *ngIf="builder">Build Settings</div>
                         <div class="pkg-col-3">Versions</div>
                     </div>
 
@@ -83,7 +85,8 @@ export enum ProjectStatus {
                       <div class="pkg-col-1">
                         <h3>{{pkg.name}}</h3>
                       </div>
-                      <div class="pkg-col-2">
+                      <div class="pkg-col-2" *ngIf="!builder">&nbsp;</div>
+                      <div class="pkg-col-2" *ngIf="builder">
                         <a href (click)="projectSettings(pkg)" *ngIf="projectForPackage(pkg) === projectStatus.Settings">
                           <img src="../assets/images/icon-gear.svg" alt="Settings" title="Settings">
                         </a>
@@ -224,6 +227,14 @@ export class OriginPageComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.sub.unsubscribe();
+    }
+
+    get features() {
+        return this.store.getState().users.current.flags;
+    }
+
+    get builder() {
+        return (this.features & FeatureFlags.BUILDER);
     }
 
     get addingPrivateKey() {
