@@ -114,12 +114,13 @@ export enum ProjectStatus {
                         <div class="hab-origin--key-list">
                             <h3>Public Origin Keys</h3>
                             <p><button
+                                *ngIf="iAmPartOfThisOrigin"
                                 (click)="setOriginAddingPublicKey(true)"
                                 [disabled]="addingPublicKey">
                                 Upload public origin key
                             </button></p>
                             <hab-key-add-form
-                                *ngIf="addingPublicKey"
+                                *ngIf="iAmPartOfThisOrigin && addingPublicKey"
                                 [docsUrl]="docsUrl"
                                 [errorMessage]="ui.publicKeyErrorMessage"
                                 keyFileHeaderPrefix="SIG-PUB-1"
@@ -138,7 +139,7 @@ export enum ProjectStatus {
                             </hab-key-list>
                         </div>
                         <hr>
-                        <div class="hab-origin--key-list">
+                        <div class="hab-origin--key-list" *ngIf="iAmPartOfThisOrigin">
                             <h3>Private Origin Keys</h3>
                             <p><button
                                 (click)="setOriginAddingPrivateKey(true)"
