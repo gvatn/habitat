@@ -265,10 +265,6 @@ export class OriginPageComponent implements OnInit, OnDestroy {
         return this.store.getState().origins.currentPublicKeys;
     }
 
-    get source() {
-        return "origin";
-    }
-
     // Initially set up the origin to be whatever comes from the params,
     // so we can query for it. In `ngOnInit`, we'll
     // populate more data by dispatching `fetchOrigin`.
