@@ -181,7 +181,8 @@ export enum ProjectStatus {
                 [errorMessage]="ui.userInviteErrorMessage"
                 [invitations]="invitations"
                 [members]="members"
-                [onSubmit]="onUserInvitationSubmit">
+                [onSubmit]="onUserInvitationSubmit"
+                *ngIf="iAmPartOfThisOrigin">
             </hab-origin-members-tab>
         </tabs>
     </div>`,
@@ -285,6 +286,10 @@ export class OriginPageComponent implements OnInit, OnDestroy {
 
     get noPackages() {
         return (!this.packagesUi.exists || this.packages.size === 0) && !this.packagesUi.loading;
+    }
+
+    get iAmPartOfThisOrigin() {
+        return this.members.size > 0;
     }
 
     private linkToRepo(p): boolean {
